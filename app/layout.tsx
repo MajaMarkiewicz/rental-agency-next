@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Navbar from "./components/Navbar"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -12,7 +13,12 @@ const RootLayout = ({ children }: Readonly<{
 }>) =>  {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        <main>
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
