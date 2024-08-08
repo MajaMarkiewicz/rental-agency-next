@@ -1,11 +1,12 @@
-import Link from "next/link"
+import InfoBoxWrapper from "./components/InfoBoxWrapper"
+import Hero from "./components/Hero"
 
 const Home = () => {
   return (
-    <div>
-      <h1 className="text-2xl">Welcome!</h1>
-      <Link href='/properties'>Go to properties</Link>
-    </div>
+    <>
+      <Hero />
+      <InfoBoxWrapper />
+    </>
   )
 }
 
