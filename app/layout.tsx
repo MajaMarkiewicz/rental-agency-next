@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Navbar from "./components/Navbar"
 import "./globals.css"
+import Footer from "./components/Footer"
 
 export const metadata: Metadata = {
   title: "Rental site",
@@ -18,6 +19,7 @@ const RootLayout = ({ children }: Readonly<{
         <main>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
