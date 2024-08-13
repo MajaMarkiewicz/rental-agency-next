@@ -2,9 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker } from 'react-icons/fa'
-import { Property } from '@/types'
+import { PropertyApiGet } from '@/types/property'
 
-const PropertyCard: React.FC<{property: Property}> = ({property}) => {
+const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
     const { images, type, name, beds, baths, square_feet, location, _id, rates } = property
     const getRateDisplay = () => {
         if (rates.monthly) {
@@ -19,8 +19,8 @@ const PropertyCard: React.FC<{property: Property}> = ({property}) => {
     return (
         <div className="rounded-xl shadow-md relative">
             <Image
-                src={`/images/properties/${images[0]}`}
-                alt=""
+                src={(images && images.length > 0) ? `/images/properties/${images[0]}` : ''}
+                alt="Missing property image"
                 width='0'
                 height='0'
                 sizes='100vw'

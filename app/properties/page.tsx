@@ -1,7 +1,12 @@
-import properties from '@/properties.json'
+import Property from '@/models/Property'
 import PropertyCard from '../components/PropertyCard'
+import connectDB from '@/utils/connectDB'
+import { PropertyApiGet } from '@/types/property'
 
-const Properties = () => {
+const Properties = async () => {
+    await connectDB()
+    const properties: PropertyApiGet[] = await Property.find({}).lean()
+
     return (
         <section className="px-4 px-6">
             <div className='container-xl lg:container m-auto px-4 py-6'>
