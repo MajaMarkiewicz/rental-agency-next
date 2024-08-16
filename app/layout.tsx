@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Navbar from "./components/Navbar"
 import "./globals.css"
 import Footer from "./components/Footer"
+import AuthProvider from "./components/AuthProvider"
 
 export const metadata: Metadata = {
   title: "Rental site",
@@ -13,15 +14,17 @@ const RootLayout = ({ children }: Readonly<{
   children: React.ReactNode;
 }>) =>  {
   return (
-    <html lang="en">
-      <body>
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <Footer />
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body>
+          <Navbar />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
 
