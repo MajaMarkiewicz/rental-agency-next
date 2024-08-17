@@ -1,7 +1,7 @@
-import { PropertyApiPost } from '@/types/property'
+import { PropertySchemaType } from '@/types/property'
 import { Schema, model, models } from 'mongoose'
 
-const PropertySchema = new Schema<PropertyApiPost>({
+const PropertySchema = new Schema<PropertySchemaType>({
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -64,6 +64,6 @@ const PropertySchema = new Schema<PropertyApiPost>({
     timestamps: true
 })
 
-const Property = models.Property || model<PropertyApiPost>('Property', PropertySchema)
+const Property = models.Property || model<PropertySchemaType>('Property', PropertySchema)
 
 export default Property

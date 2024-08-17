@@ -13,28 +13,13 @@ interface Rates {
 }
   
 interface SellerInfo {
-    name: string;
+    name?: string;
     email: string;
-    phone: string;
-}
-export interface PropertyApiPost {
-    owner: Types.ObjectId;
-    name: string;
-    type: string;
-    description?: string;  
-    location: Location;
-    beds: number;
-    baths: number;
-    square_feet: number;
-    amenities?: string[];
-    rates: Rates;
-    seller_info?: SellerInfo;
-    images?: string[];
-    is_featured: boolean;
+    phone?: string;
 }
 
-export interface PropertyApiGet {
-    _id: string;
+export type PropertySchemaType = Omit<PropertyApiPost, 'owner'> & { owner: Types.ObjectId }
+export interface PropertyApiPost {
     owner: string;
     name: string;
     type: string;
@@ -45,9 +30,13 @@ export interface PropertyApiGet {
     square_feet: number;
     amenities?: string[];
     rates: Rates;
-    seller_info?: SellerInfo;
+    seller_info: SellerInfo;
     images?: string[];
-    is_featured: boolean;
+    is_featured?: boolean;
+}
+
+export type PropertyApiGet = PropertyApiPost & {
+    _id: string;
     createdAt: Date;
     updatedAt: Date;
 }

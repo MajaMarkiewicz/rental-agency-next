@@ -3,7 +3,7 @@ export interface UserType {
     email: string;
     username: string;
     image?: string;
-    favorites: string[];    
+    favorites?: string[];    
     createdAt: Date;
     updatedAt: Date;
 }  
