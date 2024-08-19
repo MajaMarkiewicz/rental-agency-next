@@ -6,6 +6,7 @@ import PropertyDetails from '@/app/components/PropertyDetails';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import PropertyImages from '@/app/components/PropertyImages';
+import { convertToSerializableObject } from '@/utils/convertToObject'
 
 interface PropertyParams {
     id: string;
@@ -17,12 +18,19 @@ interface PropertyProps {
 
 const PropertyDetail: React.FC<PropertyProps> = async({ params }) => {
     await connectDB()
-    const property: PropertyApiGet | null = await Property.findById(params.id).lean()
-    const { images } = property || {}
+    const propertyRaw: PropertyApiGet | null = await Property.findById(params.id).lean()
+
+    if (!propertyRaw) {
+        return (<h1 className='text-center text-2xl font-bold mt-10'>
+            Property not found
+        </h1>)
+    }
+
+    const property = convertToSerializableObject(propertyRaw)
 
     return (
         <>
-        <PropertyHeaderImage image={images?.[0] || ''}></PropertyHeaderImage>
+        <PropertyHeaderImage image={property.images?.[0] || ''}></PropertyHeaderImage>
         <section>
             <div className="container m-auto py-6 px-6">
                 <Link
@@ -37,11 +45,11 @@ const PropertyDetail: React.FC<PropertyProps> = async({ params }) => {
         <section className="bg-blue-50">
             <div className="container m-auto py-10 px-6">
                 <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
-                    <PropertyDetails property={property!}></PropertyDetails>
+                    <PropertyDetails property={property}></PropertyDetails>
                 </div>
             </div>
         </section>
-        {property!.images && <PropertyImages images={property!.images}/>}
+        {property.images && <PropertyImages images={property.images}/>}
         </>
     )
   }
