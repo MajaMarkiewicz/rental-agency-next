@@ -5,6 +5,7 @@ import PropertyHeaderImage from '@/app/components/PropertyHeaderImage';
 import PropertyDetails from '@/app/components/PropertyDetails';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
+import PropertyImages from '@/app/components/PropertyImages';
 
 interface PropertyParams {
     id: string;
@@ -40,6 +41,7 @@ const PropertyDetail: React.FC<PropertyProps> = async({ params }) => {
                 </div>
             </div>
         </section>
+        {property!.images && <PropertyImages images={property!.images}/>}
         </>
     )
   }

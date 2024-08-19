@@ -5,6 +5,7 @@ import connectDB from "@/utils/connectDB"
 import { getSessionUser } from "@/utils/getSessionUser"
 import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
+import cloudinary from '@/utils/cloudinary'
 
 async function addProperty(formData) {
     await connectDB()
@@ -13,7 +14,7 @@ async function addProperty(formData) {
     if (!user || !user.id) throw new Error('User.id is missing')
 
     const amenities = formData.getAll('amenities')
-    const images = formData.getAll('images').filter(image => (image.name !== '' && image.size !== 0)).map(image => image.name)
+    const images = formData.getAll('images').filter(image => (image.name !== '' && image.size !== 0))
 
     const propertyDataFromForm = {
         type: formData.get('type'),
@@ -39,11 +40,27 @@ async function addProperty(formData) {
             email: formData.get('seller_info.email'),
             phone: formData.get('seller_info.phone'),
         },
-        images,
+    }
+
+    const imageUrls = []
+
+    for (const imageFile of images) {
+        const imageBuffer = await imageFile.arrayBuffer()
+        const imageArray = Array.from(new Uint8Array(imageBuffer))
+        const imageData = Buffer.from(imageArray)
+
+        const imageBase64 = imageData.toString('base64')
+
+        const result = await cloudinary.uploader.upload(`data:image/png;base64,${imageBase64}`, {
+            folder: 'Rental-app'
+        })
+
+        imageUrls.push(result.secure_url)
     }
 
     const propertyData = {
         owner: user.id,
+        images: imageUrls,
         ...propertyDataFromForm
     }
 

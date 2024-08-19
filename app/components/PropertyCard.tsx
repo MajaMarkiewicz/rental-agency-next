@@ -19,7 +19,7 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
     return (
         <div className="rounded-xl shadow-md relative">
             <Image
-                src={(images && images.length > 0) ? `/images/properties/${images[0]}` : ''}
+                src={(images && images.length > 0) ? images[0] : ''}
                 alt="Missing property image"
                 width='0'
                 height='0'
@@ -40,17 +40,17 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
                 <div className="flex justify-center gap-4 text-gray-500 mb-4">
                     <p>
                         <FaBed className='md:hidden lg:inline'/> 
-                        {beds}{' '}
+                        {' '}{beds}{' '}
                         <span className="md:hidden lg:inline">Beds</span>
                     </p>
                     <p>
                         <FaBath className='md:hidden lg:inline'/> 
-                        {baths}{' '}
+                        {' '}{baths}{' '}
                         <span className="md:hidden lg:inline">Baths</span>
                     </p>
                     <p>
                         <FaRulerCombined className='md:hidden lg:inline'/>
-                        {square_feet}{' '} 
+                        {' '}{square_feet}{' '} 
                         <span className="md:hidden lg:inline">sqft</span>
                     </p>
                 </div>
