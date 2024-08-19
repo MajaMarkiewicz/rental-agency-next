@@ -1,10 +1,18 @@
-import addProperty from '@/app/actions/addProperty'
+import { PropertyApiGet } from '@/types/property';
 
-const PropertyAddForm: React.FC = () => {
+interface PropertyFormProps {
+    property: PropertyApiGet;
+    action: any;
+    title: string;
+    buttonText: string
+}
 
+const PropertyAddEditForm: React.FC<PropertyFormProps> = ({ property, action, title, buttonText }) => {
+  const { type, name, description, location, square_feet, beds, baths, amenities, rates, seller_info } = property
+    // TODO @mm use this component also in PropertyAddForm
   return (
-    <form action={addProperty}>
-      <h2 className='text-3xl text-center font-semibold mb-6'>Add Property</h2>
+    <form action={action}>
+      <h2 className='text-3xl text-center font-semibold mb-6'>{title}</h2>
 
       <div className='mb-4'>
 
@@ -15,6 +23,7 @@ const PropertyAddForm: React.FC = () => {
           id='type'
           name='type'
           className='border rounded w-full py-2 px-3'
+          defaultValue={type}
           required
         >
           <option value=''>Select a type</option>
@@ -38,6 +47,7 @@ const PropertyAddForm: React.FC = () => {
           name='name'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='eg. Beautiful Apartment In Miami'
+          defaultValue={name}
           required
         />
       </div>
@@ -55,6 +65,7 @@ const PropertyAddForm: React.FC = () => {
           className='border rounded w-full py-2 px-3'
           rows={4}
           placeholder='Add an optional description of your property'
+          defaultValue={description}
         ></textarea>
       </div>
 
@@ -66,6 +77,7 @@ const PropertyAddForm: React.FC = () => {
           name='location.street'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Street'
+          defaultValue={location.street}
         />
         <input
           type='text'
@@ -73,6 +85,7 @@ const PropertyAddForm: React.FC = () => {
           name='location.city'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='City'
+          defaultValue={location.city}
           required
         />
         <input
@@ -81,6 +94,7 @@ const PropertyAddForm: React.FC = () => {
           name='location.state'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='State'
+          defaultValue={location.state}
           required
         />
         <input
@@ -89,6 +103,7 @@ const PropertyAddForm: React.FC = () => {
           name='location.zipcode'
           className='border rounded w-full py-2 px-3 mb-2'
           placeholder='Zipcode'
+          defaultValue={location.zipcode}
         />
       </div>
 
@@ -102,6 +117,7 @@ const PropertyAddForm: React.FC = () => {
             id='beds'
             name='beds'
             className='border rounded w-full py-2 px-3'
+            defaultValue={beds}
             required
           />
         </div>
@@ -114,6 +130,7 @@ const PropertyAddForm: React.FC = () => {
             id='baths'
             name='baths'
             className='border rounded w-full py-2 px-3'
+            defaultValue={baths}
             required
           />
         </div>
@@ -129,6 +146,7 @@ const PropertyAddForm: React.FC = () => {
             id='square_feet'
             name='square_feet'
             className='border rounded w-full py-2 px-3'
+            defaultValue={square_feet}
             required
           />
         </div>
@@ -144,6 +162,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Wifi'
               className='mr-2'
+              defaultChecked={amenities?.includes('wifi')}
             />
             <label htmlFor='amenity_wifi'>Wifi</label>
           </div>
@@ -154,6 +173,8 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Full kitchen'
               className='mr-2'
+              defaultChecked={amenities?.includes('Full kitchen')}
+
             />
             <label htmlFor='amenity_kitchen'>Full kitchen</label>
           </div>
@@ -164,6 +185,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Washer & Dryer'
               className='mr-2'
+              defaultChecked={amenities?.includes('Washer & Dryer')}
             />
             <label htmlFor='amenity_washer_dryer'>Washer & Dryer</label>
           </div>
@@ -174,6 +196,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Free Parking'
               className='mr-2'
+              defaultChecked={amenities?.includes('Free Parking')}
             />
             <label htmlFor='amenity_free_parking'>Free Parking</label>
           </div>
@@ -184,6 +207,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Swimming Pool'
               className='mr-2'
+              defaultChecked={amenities?.includes('Swimming Pool')}
             />
             <label htmlFor='amenity_pool'>Swimming Pool</label>
           </div>
@@ -194,6 +218,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Hot Tub'
               className='mr-2'
+              defaultChecked={amenities?.includes('Hot Tub')}
             />
             <label htmlFor='amenity_hot_tub'>Hot Tub</label>
           </div>
@@ -204,6 +229,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='24/7 Security'
               className='mr-2'
+              defaultChecked={amenities?.includes('24/7 Security')}
             />
             <label htmlFor='amenity_24_7_security'>24/7 Security</label>
           </div>
@@ -214,6 +240,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Wheelchair Accessible'
               className='mr-2'
+              defaultChecked={amenities?.includes('Wheelchair Accessible')}
             />
             <label htmlFor='amenity_wheelchair_accessible'>
               Wheelchair Accessible
@@ -226,6 +253,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Elevator Access'
               className='mr-2'
+              defaultChecked={amenities?.includes('Elevator Access')}
             />
             <label htmlFor='amenity_elevator_access'>Elevator Access</label>
           </div>
@@ -236,6 +264,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Dishwasher'
               className='mr-2'
+              defaultChecked={amenities?.includes('Dishwasher')}
             />
             <label htmlFor='amenity_dishwasher'>Dishwasher</label>
           </div>
@@ -246,6 +275,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Gym/Fitness Center'
               className='mr-2'
+              defaultChecked={amenities?.includes('Gym/Fitness Center')}
             />
             <label htmlFor='amenity_gym_fitness_center'>
               Gym/Fitness Center
@@ -258,6 +288,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Air Conditioning'
               className='mr-2'
+              defaultChecked={amenities?.includes('Air Conditioning')}
             />
             <label htmlFor='amenity_air_conditioning'>Air Conditioning</label>
           </div>
@@ -268,6 +299,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Balcony/Patio'
               className='mr-2'
+              defaultChecked={amenities?.includes('Balcony/Patio')}
             />
             <label htmlFor='amenity_balcony_patio'>Balcony/Patio</label>
           </div>
@@ -278,6 +310,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Smart TV'
               className='mr-2'
+              defaultChecked={amenities?.includes('Smart TV')}
             />
             <label htmlFor='amenity_smart_tv'>Smart TV</label>
           </div>
@@ -288,6 +321,7 @@ const PropertyAddForm: React.FC = () => {
               name='amenities'
               value='Coffee Maker'
               className='mr-2'
+              defaultChecked={amenities?.includes('Coffee Maker')}
             />
             <label htmlFor='amenity_coffee_maker'>Coffee Maker</label>
           </div>
@@ -308,6 +342,7 @@ const PropertyAddForm: React.FC = () => {
               id='weekly_rate'
               name='rates.weekly'
               className='border rounded w-full py-2 px-3'
+              defaultValue={rates.weekly}
             />
           </div>
           <div className='flex items-center'>
@@ -319,6 +354,7 @@ const PropertyAddForm: React.FC = () => {
               id='monthly_rate'
               name='rates.monthly'
               className='border rounded w-full py-2 px-3'
+              defaultValue={rates.monthly}
             />
           </div>
           <div className='flex items-center'>
@@ -330,6 +366,7 @@ const PropertyAddForm: React.FC = () => {
               id='nightly_rate'
               name='rates.nightly'
               className='border rounded w-full py-2 px-3'
+              defaultValue={rates.nightly}
             />
           </div>
         </div>
@@ -348,6 +385,7 @@ const PropertyAddForm: React.FC = () => {
           name='seller_info.name'
           className='border rounded w-full py-2 px-3'
           placeholder='Name'
+          defaultValue={seller_info.name}
         />
       </div>
       <div className='mb-4'>
@@ -363,6 +401,7 @@ const PropertyAddForm: React.FC = () => {
           name='seller_info.email'
           className='border rounded w-full py-2 px-3'
           placeholder='Email address'
+          defaultValue={seller_info.email}
           required
         />
       </div>
@@ -379,6 +418,7 @@ const PropertyAddForm: React.FC = () => {
           name='seller_info.phone'
           className='border rounded w-full py-2 px-3'
           placeholder='Phone'
+          defaultValue={seller_info.phone}
         />
       </div>
 
@@ -401,11 +441,11 @@ const PropertyAddForm: React.FC = () => {
           className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
           type='submit'
         >
-          Add Property
+          {buttonText}
         </button>
       </div>
     </form>
   );
 };
 
-export default PropertyAddForm;
+export default PropertyAddEditForm;

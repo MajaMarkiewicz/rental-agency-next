@@ -251,5 +251,6 @@ const Navbar: React.FC = () => {
   );
 };
 
+// TODO @mm save paths in some const in order to not write them manually
 // TODO @mm make smaller components for readability instead one big file with comments
 export default Navbar;
