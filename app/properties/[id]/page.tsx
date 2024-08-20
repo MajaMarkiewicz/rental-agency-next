@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import PropertyImages from '@/app/components/PropertyImages';
 import { convertToSerializableObject } from '@/utils/convertToObject'
+import BookmarkButton from '@/app/components/BookmarkButton';
+import ShareButtons from '@/app/components/ShareButtons';
+import ContactForm from '@/app/components/PropertyContactForm';
 
 interface PropertyParams {
     id: string;
@@ -46,6 +49,11 @@ const PropertyDetail: React.FC<PropertyProps> = async({ params }) => {
             <div className="container m-auto py-10 px-6">
                 <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
                     <PropertyDetails property={property}></PropertyDetails>
+                    <aside className='space-y-4'>
+                        <BookmarkButton property={property}/>
+                        <ShareButtons property={property}/>
+                        <ContactForm property={property}/>
+                    </aside>
                 </div>
             </div>
         </section>

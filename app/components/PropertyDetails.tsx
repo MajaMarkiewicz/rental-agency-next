@@ -78,10 +78,6 @@ const PropertyDetails: React.FC<{ property: PropertyApiGet }> = ({ property }) =
                     ))}
                 </ul>
             </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <div id="map"></div>
-            </div>
         </main>
     )
 }
