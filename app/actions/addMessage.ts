@@ -13,7 +13,7 @@ const getFormDataString = (formData: FormData, key: string): string => {
     throw new Error(`${key} is required and must be a string`);
 };
 
-async function addMessage(formData: FormData): Promise<{ submitted: boolean }> {
+async function addMessage(previousState, formData: FormData): Promise<{ submitted: boolean, error?: string }> {
     await connectDB()
     const user = await getSessionUser()
 
@@ -22,8 +22,8 @@ async function addMessage(formData: FormData): Promise<{ submitted: boolean }> {
     const getRequiredString = (field: string) =>  getFormDataString(formData, field)
     const recipient = getRequiredString('recipient')
 
-    if (user.id === 'recipient') {
-        throw new Error('User cannot send message to self')
+    if (user.id === recipient) {
+        return({ error: 'You cannot send message to self', submitted: false })
     }
 
     const newMessage = new Message<MessageApiPost>({
@@ -33,7 +33,7 @@ async function addMessage(formData: FormData): Promise<{ submitted: boolean }> {
         name: getRequiredString('name'),
         email: getRequiredString('email'),
         phone: formData.get('phone') as string | null,
-        body: formData.get('body') as string | null
+        body: formData.get('message') as string | null
     })
 
     await newMessage.save()

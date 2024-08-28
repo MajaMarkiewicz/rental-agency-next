@@ -1,8 +1,6 @@
 'use server'
 
 import connectDB from "@/utils/connectDB"
-import { revalidatePath } from "next/cache"
-import { redirect } from 'next/navigation'
 import User from '@/models/User' 
 import { getSessionUser } from "@/utils/getSessionUser"
 

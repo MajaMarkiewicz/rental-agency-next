@@ -26,3 +26,12 @@ export type MessageApiGet = MessageApiPost & {
     updatedAt: Date;
     read: boolean;
 }
+
+export type MessagePopulated = MessageApiGet & {
+    property: {
+        name: string;
+    },
+    sender: {
+        username: string;
+    }
+}

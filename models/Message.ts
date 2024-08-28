@@ -35,6 +35,6 @@ const MessageSchema = new Schema<MessageSchemaType>({
     timestamps: true
 })
 
-const Message = models.Message || model('User', MessageSchema)
+const Message = models.Message || model('Message', MessageSchema)
 
 export default Message
