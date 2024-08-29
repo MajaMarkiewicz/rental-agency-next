@@ -5,20 +5,25 @@ import type { MessagePopulated } from "@/types/message"
 import markAsRead from '../actions/markAsRead'
 import { toast } from 'react-toastify'
 import deleteMessage from '../actions/deleteMessage'
+import { useGlobalContext } from '@/context/GlobalContext'
 
 const MessageCard: React.FC<{ message: MessagePopulated }> = ({ message }) => {
     const [isRead, setIsRead] = useState(message.read)
     const [isDeleted, setIsDeleted] = useState(false)
 
+    const { setUnreadCount } = useGlobalContext()
+
     const handleReadClick = async () => {
         const newRead = await markAsRead(message._id)
         setIsRead(newRead)
+        setUnreadCount((prev) => newRead ? prev - 1 : prev + 1)
         toast.success(`Message marked as ${newRead ? 'read' : 'unread'}`)
     }
 
     const handleDeleteClick = async () => {
         await deleteMessage(message._id)
         setIsDeleted(true)
+        setUnreadCount((prev) => isRead ? prev : prev - 1)
         toast.success('Message deleted')
     }
 
