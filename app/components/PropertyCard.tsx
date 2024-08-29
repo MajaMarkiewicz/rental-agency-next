@@ -1,8 +1,8 @@
-import React from 'react'
+import type React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker } from 'react-icons/fa'
-import { PropertyApiGet } from '@/types/property'
+import type { PropertyApiGet } from '@/types/property'
 
 const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
     const { images, type, name, beds, baths, square_feet, location, _id, rates } = property
@@ -18,14 +18,16 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
 
     return (
         <div className="rounded-xl shadow-md relative">
-            <Image
-                src={(images && images.length > 0) ? images[0] : ''}
-                alt="Missing property image"
-                width='0'
-                height='0'
-                sizes='100vw'
-                className='w-full h-auto rounded-t-xl'
-            />
+            <Link href={`/properties/${_id}`}>
+                <Image
+                    src={(images && images.length > 0) ? images[0] : ''}
+                    alt="Missing property image"
+                    width='0'
+                    height='0'
+                    sizes='100vw'
+                    className='w-full h-auto rounded-t-xl'
+                />
+            </Link>
             <div className="p-4">
                 <div className="text-left md:text-center lg:text-left mb-6">
                     <div className="text-gray-600">{type}</div>
@@ -39,19 +41,19 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
 
                 <div className="flex justify-center gap-4 text-gray-500 mb-4">
                     <p>
-                        <FaBed className='md:hidden lg:inline'/> 
+                        <FaBed className='lg:inline'/> 
                         {' '}{beds}{' '}
-                        <span className="md:hidden lg:inline">Beds</span>
+                        <span className="lg:inline">Beds</span>
                     </p>
                     <p>
-                        <FaBath className='md:hidden lg:inline'/> 
+                        <FaBath className='lg:inline'/> 
                         {' '}{baths}{' '}
-                        <span className="md:hidden lg:inline">Baths</span>
+                        <span className="lg:inline">Baths</span>
                     </p>
                     <p>
-                        <FaRulerCombined className='md:hidden lg:inline'/>
+                        <FaRulerCombined className='lg:inline'/>
                         {' '}{square_feet}{' '} 
-                        <span className="md:hidden lg:inline">sqft</span>
+                        <span className="lg:inline">sqft</span>
                     </p>
                 </div>
 
