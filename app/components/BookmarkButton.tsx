@@ -1,6 +1,6 @@
 'use client'
 
-import { PropertyApiGet } from "@/types/property"
+import type { PropertyApiGet } from "@/types/property"
 import { FaBookmark } from "react-icons/fa"
 import bookmarkProperty from "../actions/bookmarkProperty"
 import checkIsFavorite from "../actions/checkIsFavorite"
@@ -21,7 +21,7 @@ const BookmarkButton: React.FC<{property: PropertyApiGet}> = ({property}) => {
             setIsBookmarked(res)
             setIsLoading(false)
         })
-    }, [property._id, userId, checkIsFavorite])
+    }, [property._id, userId])
     const handleClick = async () => {
         if (!userId) {
             toast.error('You need to sign in to bookmark a property');

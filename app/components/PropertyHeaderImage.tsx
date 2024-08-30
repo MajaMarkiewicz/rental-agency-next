@@ -1,11 +1,12 @@
-import React from 'react';
+import type React from 'react'
+import Image from 'next/image'
 
 const PropertyHeaderImage: React.FC<{image: string}> = async ({ image }) => {
     return (
     <section>
       <div className="container-xl m-auto">
         <div className="grid grid-cols-1">
-          <img
+          <Image
             src={image}
             alt=""
             className="object-cover h-[400px] w-full"
