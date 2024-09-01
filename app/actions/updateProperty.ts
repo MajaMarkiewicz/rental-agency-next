@@ -1,12 +1,27 @@
 'use server'
 
 import Property from "@/models/Property"
+import type { PropertyApiPost } from "@/types/property"
 import connectDB from "@/utils/connectDB"
 import { getSessionUser } from "@/utils/getSessionUser"
 import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 
-async function updateProperty(propertyId: string, formData) {
+const getString = (formData: FormData, key: string): string | undefined => {
+    const value = formData.get(key);
+    return value ? String(value) : undefined;
+};
+
+const getNumber = (formData: FormData, key: string): number | null => {
+    const value = formData.get(key);
+    return value ? Number.parseFloat(String(value)) : null;
+};
+
+const getStringArray = (formData: FormData, key: string): string[] => {
+    return Array.from(formData.getAll(key)).map(value => String(value));
+};
+
+async function updateProperty(propertyId: string, formData: FormData) {
     await connectDB()
     const user = await getSessionUser()
 
@@ -16,41 +31,41 @@ async function updateProperty(propertyId: string, formData) {
 
     if (!existingProperty) throw new Error('Property not found')
 
-    if(existingProperty.owner.toString() !== user.id) {
+    if (existingProperty.owner.toString() !== user.id) {
         throw new Error('Unauthorized')
     }
 
-    const propertyDataFromForm = {
-        type: formData.get('type'),
-        name: formData.get('name'),
-        description: formData.get('description'),
+    const propertyDataFromForm: Omit<PropertyApiPost, 'owner'> = {
+        type: getString(formData, 'type') ?? '',
+        name: getString(formData, 'name') ?? '',
+        description: getString(formData, 'description'),
         location: {
-            street: formData.get('location.street'),
-            city: formData.get('location.city'),
-            state: formData.get('location.state'),
-            zipcode: formData.get('location.zipcode'),
+            street: getString(formData, 'location.street') ?? '',
+            city: getString(formData, 'location.city') ?? '',
+            state: getString(formData, 'location.state') ?? '',
+            zipcode: getString(formData, 'location.zipcode') ?? ''
         },
-        beds: parseInt(formData.get('beds'), 10),
-        baths: parseInt(formData.get('baths'), 10),
-        square_feet: parseInt(formData.get('square_feet'), 10),
-        amenities: formData.getAll('amenities'),
+        beds: getNumber(formData, 'beds') ?? 0,
+        baths: getNumber(formData, 'baths') ?? 0,
+        square_feet: getNumber(formData, 'square_feet') ?? 0,
+        amenities: getStringArray(formData, 'amenities'),
         rates: {
-            nightly: formData.get('rates.nightly') ? parseFloat(formData.get('rates.nightly')) : null,
-            weekly: formData.get('rates.weekly') ? parseFloat(formData.get('rates.weekly')) : null,
-            monthly: formData.get('rates.monthly') ? parseFloat(formData.get('rates.monthly')) : null,
+            nightly: getNumber(formData, 'rates.nightly') ?? undefined,
+            weekly: getNumber(formData, 'rates.weekly') ?? undefined,
+            monthly: getNumber(formData, 'rates.monthly') ?? undefined
         },
         seller_info: {
-            name: formData.get('seller_info.name'),
-            email: formData.get('seller_info.email'),
-            phone: formData.get('seller_info.phone'),
+            name: getString(formData, 'seller_info.name'),
+            email: getString(formData, 'seller_info.email') ?? '',
+            phone: getString(formData, 'seller_info.phone')
         },
     }
 
-    await Property.findByIdAndUpdate(propertyId, propertyDataFromForm)
+    await Property.findByIdAndUpdate(propertyId, propertyDataFromForm);
 
-    revalidatePath('/', 'layout')
+    revalidatePath('/', 'layout');
 
-    redirect(`/properties/${propertyId}`)
+    redirect(`/properties/${propertyId}`);
 }
 
 export default updateProperty;

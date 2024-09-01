@@ -6,43 +6,46 @@ import { getSessionUser } from "@/utils/getSessionUser"
 import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 import cloudinary from '@/utils/cloudinary'
+import type { PropertyApiPost } from "@/types/property"
+import type { Types } from "mongoose"
 
-async function addProperty(formData) {
+async function addProperty(formData: FormData): Promise<void> {
     await connectDB()
     const user = await getSessionUser()
 
     if (!user || !user.id) throw new Error('User.id is missing')
 
-    const amenities = formData.getAll('amenities')
-    const images = formData.getAll('images').filter(image => (image.name !== '' && image.size !== 0))
+    const amenities = formData.getAll('amenities') as string[]
+    const images = formData.getAll('images')
+    .filter((entry): entry is File => entry instanceof File && entry.name !== '' && entry.size !== 0);
 
-    const propertyDataFromForm = {
-        type: formData.get('type'),
-        name: formData.get('name'),
-        description: formData.get('description'),
+    const propertyDataFromForm: Omit<PropertyApiPost, 'owner' | 'images'> = {
+        type: formData.get('type') as string,
+        name: formData.get('name') as string,
+        description: formData.get('description') as string | undefined,
         location: {
-            street: formData.get('location.street'),
-            city: formData.get('location.city'),
-            state: formData.get('location.state'),
-            zipcode: formData.get('location.zipcode'),
+            street: formData.get('location.street') as string,
+            city: formData.get('location.city') as string,
+            state: formData.get('location.state') as string,
+            zipcode: formData.get('location.zipcode') as string,
         },
-        beds: parseInt(formData.get('beds'), 10),
-        baths: parseInt(formData.get('baths'), 10),
-        square_feet: parseInt(formData.get('square_feet'), 10),
-        amenities,
+        beds: Number.parseInt(formData.get('beds') as string, 10),
+        baths: Number.parseInt(formData.get('baths') as string, 10),
+        square_feet: Number.parseInt(formData.get('square_feet') as string, 10),
+        amenities: amenities.length > 0 ? amenities : undefined,
         rates: {
-            nightly: formData.get('rates.nightly') ? parseFloat(formData.get('rates.nightly')) : null,
-            weekly: formData.get('rates.weekly') ? parseFloat(formData.get('rates.weekly')) : null,
-            monthly: formData.get('rates.monthly') ? parseFloat(formData.get('rates.monthly')) : null,
+            nightly: formData.get('rates.nightly') ? Number.parseFloat(formData.get('rates.nightly') as string) : undefined,
+            weekly: formData.get('rates.weekly') ? Number.parseFloat(formData.get('rates.weekly') as string) : undefined,
+            monthly: formData.get('rates.monthly') ? Number.parseFloat(formData.get('rates.monthly') as string) : undefined,
         },
         seller_info: {
-            name: formData.get('seller_info.name'),
-            email: formData.get('seller_info.email'),
-            phone: formData.get('seller_info.phone'),
+            name: formData.get('seller_info.name') as string | undefined,
+            email: formData.get('seller_info.email') as string,
+            phone: formData.get('seller_info.phone') as string | undefined,
         },
     }
 
-    const imageUrls = []
+    const imageUrls: string[] = []
 
     for (const imageFile of images) {
         const imageBuffer = await imageFile.arrayBuffer()
@@ -58,9 +61,9 @@ async function addProperty(formData) {
         imageUrls.push(result.secure_url)
     }
 
-    const propertyData = {
+    const propertyData: PropertyApiPost = {
         owner: user.id,
-        images: imageUrls,
+        images: imageUrls.length > 0 ? imageUrls : undefined,
         ...propertyDataFromForm
     }
 
@@ -72,4 +75,4 @@ async function addProperty(formData) {
     redirect(`/properties/${newProperty._id}`)
 }
 
-export default addProperty;
+export default addProperty

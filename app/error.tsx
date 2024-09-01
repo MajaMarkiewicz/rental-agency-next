@@ -2,15 +2,14 @@
 import Link from "next/link"
 import {FaExclamationCircle} from 'react-icons/fa'
 
-const ErrorPage = ({ error }) => {
-    return (
+const ErrorPage: React.FC<{error: string}> = ({ error }) => {    return (
     <section className="bg-blue-50 min-h-screen flex-grow">
       <div className="container m-auto max-w-2xl py-24">
         <div
           className="bg-white px-6 py-24 mb-4 shadow-md rounded-md border m-4 md:m-0"
         >
           <div className="flex justify-center">
-            <FaExclamationCircle className="fa-5x text-8xl text-yellow-400"></FaExclamationCircle>
+            <FaExclamationCircle className="fa-5x text-8xl text-yellow-400" />
           </div>
           <div className="text-center">
             <h1 className="text-3xl font-bold mt-4 mb-2">Something went wrong</h1>
@@ -26,7 +25,6 @@ const ErrorPage = ({ error }) => {
           </div>
         </div>
       </div>
-      <div className="flex-grow"></div>
     </section>
     )
 }

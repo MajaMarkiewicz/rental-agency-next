@@ -38,6 +38,7 @@ const BookmarkButton: React.FC<{property: PropertyApiGet}> = ({property}) => {
 
     return isLoading ? (
         <button 
+            type="button"
             className="bg-gray-500 hover:bg-gray-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
         >
             <FaBookmark className="mr-2" />
@@ -45,13 +46,15 @@ const BookmarkButton: React.FC<{property: PropertyApiGet}> = ({property}) => {
         </button>
     ) : isBookmarked ? (
         <button 
+            type="button"
             className="bg-red-500 hover:bg-red-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             onClick={handleClick}
         >
             <FaBookmark className="mr-2" />
             Remove bookmark
         </button>
-    ) : (  <button 
+    ) : (  <button
+            type="button"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             onClick={handleClick}
         >
