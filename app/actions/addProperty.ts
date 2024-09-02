@@ -1,4 +1,3 @@
-import { Image } from 'next/image';
 'use server'
 
 import Property from "@/models/Property"
@@ -53,6 +52,7 @@ async function addProperty(formData: FormData): Promise<void> {
     const imageUrls: string[] = []
 
     for (const imageFile of images) {
+        // @ts-expect-error
         const imageBuffer = await imageFile.arrayBuffer()
         const imageArray = Array.from(new Uint8Array(imageBuffer))
         const imageData = Buffer.from(imageArray)
