@@ -4,7 +4,7 @@ import { Schema, model, models } from 'mongoose'
 const UserSchema = new Schema<UserType>({
     email: { 
         type: String, 
-        unique: true, // @TODO handle error when not unique 
+        unique: true,
         required: [true, 'Email is required'] 
     },
     username: {

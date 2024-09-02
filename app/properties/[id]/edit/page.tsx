@@ -1,8 +1,8 @@
 import connectDB from '@/utils/connectDB'
 import Property from '@/models/Property'
-import { PropertyApiGet } from '@/types/property';
+import type { PropertyApiGet } from '@/types/property';
 import { convertToSerializableObject } from '@/utils/convertToObject'
-import PropertyEditForm from '@/app/components/PropertyEditForm';
+import PropertyAddEditForm from '@/app/components/PropertyAddEditForm';
 import updateProperty from '@/app/actions/updateProperty'
 
 interface PropertyParams {
@@ -25,7 +25,7 @@ const PropertyEdit: React.FC<{params: PropertyParams}> = async ({ params }) => {
         <section>
             <div className="container m-auto py-24 max-w-2xl">
                 <div className='bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0'>
-                    <PropertyEditForm property={property} title='Edit property' buttonText='Update Property' action={updateProperty.bind(null, property._id)}/>
+                    <PropertyAddEditForm property={property} title='Edit property' buttonText='Update Property' action={updateProperty.bind(null, property._id)}/>
                 </div>
             </div>
         </section>
