@@ -1,7 +1,7 @@
 import { FaPaperPlane } from "react-icons/fa"
 import { useFormStatus } from "react-dom"
 
-const ContactFormButton = () => {
+const ContactFormButton: React.FC = () => {
     const { pending } = useFormStatus()
     return (
         <button

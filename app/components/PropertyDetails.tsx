@@ -1,5 +1,5 @@
-import React from 'react';
-import { PropertyApiGet } from '@/types/property';
+import type React from 'react';
+import type { PropertyApiGet } from '@/types/property';
 import { FaBed, FaBath, FaRulerCombined, FaCheck, FaTimes, FaMapMarker } from 'react-icons/fa';
 
 const PropertyDetails: React.FC<{ property: PropertyApiGet }> = ({ property }) => {

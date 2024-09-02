@@ -1,7 +1,7 @@
 'use client'
 import { useGlobalContext } from "@/context/GlobalContext";
 
-const UnreadMessageCount = () => {
+const UnreadMessageCount: React.FC = () => {
     const { unreadCount } = useGlobalContext()
     if (unreadCount === 0) {
         return null

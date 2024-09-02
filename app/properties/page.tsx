@@ -5,7 +5,13 @@ import PropertySearchForm from '../components/PropertySeachForm'
 import type { PropertyApiGet } from '@/types/property'
 import Pagination from '../components/Pagination'
 
-const Properties = async ({ searchParams: {page = '1', pageSize = '12'} }) => {
+interface SearchParams {
+    page: string;
+    pageSize: string;
+}
+
+
+const Properties: React.FC<{searchParams: SearchParams}> = async ({ searchParams: {page = '1', pageSize = '12'} }) => {
     await connectDB()
     const pageInt = Number.parseInt(page)
     const pageSizeInt = Number.parseInt(pageSize)
@@ -15,7 +21,7 @@ const Properties = async ({ searchParams: {page = '1', pageSize = '12'} }) => {
     const properties: PropertyApiGet[] = await Property.find({}).skip(skip).limit(pageSizeInt).lean()
 
     return properties.length === 0 
-                    ? (<section className="px-4 px-6">
+                    ? (<section className="px-4 py-6">
                             <div className='container-xl lg:container m-auto px-4 py-6'>
                                 <p>No properties found</p>
                             </div> 

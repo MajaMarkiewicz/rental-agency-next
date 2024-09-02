@@ -25,8 +25,8 @@ async function deleteProperty(propertyId: string) {
     const imageIds = property.images.map((url: string) => url.split('/').at(-1)?.split('.').at(0))
 
     if(imageIds.length > 0) {
-        for (let imageId of imageIds) {
-            await cloudinary.uploader.destroy('Rental-app/' + imageId)
+        for (const imageId of imageIds) {
+            await cloudinary.uploader.destroy(`Rental-app/'${imageId}`)
         }
     }
 

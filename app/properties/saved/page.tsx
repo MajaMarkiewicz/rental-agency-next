@@ -1,10 +1,10 @@
 import PropertyCard from "@/app/components/PropertyCard"
 import User from "@/models/User"
-import { PropertyApiGet } from "@/types/property"
+import type { PropertyApiGet } from "@/types/property"
 import connectDB from "@/utils/connectDB"
 import { getSessionUser } from "@/utils/getSessionUser"
 
-const PropertiesSaved = async () => {
+const PropertiesSaved: React.FC = async () => {
     await connectDB()
 
     const {id: userId} = await getSessionUser() || {}

@@ -4,7 +4,7 @@ import Property from "@/models/Property"
 import { getSessionUser } from '@/utils/getSessionUser'
 import profileDefault from '@/assets/images/profile.png'
 import ProfileProperties from "../components/ProfileProperties"
-import { PropertyApiGet } from "@/types/property"
+import type { PropertyApiGet } from "@/types/property"
 import { convertToSerializableObject } from '@/utils/convertToObject'
 
 const ProfilePage = async () => {

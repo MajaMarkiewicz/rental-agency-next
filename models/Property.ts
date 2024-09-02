@@ -1,4 +1,4 @@
-import { PropertySchemaType } from '@/types/property'
+import type { PropertySchemaType } from '@/types/property'
 import { Schema, model, models } from 'mongoose'
 
 const PropertySchema = new Schema<PropertySchemaType>({

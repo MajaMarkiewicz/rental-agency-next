@@ -10,9 +10,9 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
     const getRateDisplay = () => {
         if (rates.monthly) {
             return `$${rates.monthly.toLocaleString()}/month`
-        } else if (rates.weekly) {
+        } if (rates.weekly) {
             return `$${rates.weekly.toLocaleString()}/week`
-        } else if (rates.nightly) {
+        } if (rates.nightly) {
             return `$${rates.nightly.toLocaleString()}/night`
         }
     }
