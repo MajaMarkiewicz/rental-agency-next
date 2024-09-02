@@ -16,22 +16,19 @@ interface GlobalProviderProps {
 }
 
 export function GlobalProvider({ children }: GlobalProviderProps) {
-  const [unreadCount, setUnreadCount] = useState<number>(0)
+  const [unreadCount, setUnreadCount] = useState<number>(0);
 
   const { data: session } = useSession();
 
   useEffect(() => {
     if (session?.user) {
-      console.log('useEffect')
-      getUnreadMessageCount()
-        .then((res) => {
-          console.log('res', res)
-          if (res.unreadCount) setUnreadCount(res.unreadCount)
-        })
+      console.log('useEffect');
+      getUnreadMessageCount().then((res) => {
+        console.log('res', res);
+        if (res.unreadCount) setUnreadCount(res.unreadCount);
+      });
     }
-  },
-  [getUnreadMessageCount, session]
-)
+  }, [getUnreadMessageCount, session]);
   return (
     <GlobalContext.Provider
       value={{
@@ -45,9 +42,9 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
 }
 
 export function useGlobalContext() {
-  const context = useContext(GlobalContext)
+  const context = useContext(GlobalContext);
   if (context === undefined) {
     throw new Error('useGlobalContext must be used within a GlobalProvider');
   }
-  return context
+  return context;
 }

@@ -1,6 +1,6 @@
-import InfoBoxWrapper from "./components/InfoBoxWrapper"
-import Hero from "./components/Hero"
-import HomeProperties from './components/HomeProperties'
+import InfoBoxWrapper from './components/InfoBoxWrapper';
+import Hero from './components/Hero';
+import HomeProperties from './components/HomeProperties';
 
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
       <InfoBoxWrapper />
       <HomeProperties />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

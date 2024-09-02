@@ -1,11 +1,11 @@
 import type { PropertyApiGet } from '@/types/property';
 
 interface PropertyFormProps {
-    property?: PropertyApiGet;
-    // biome-ignore lint/suspicious/noExplicitAny: I want this component to be reusable in case of different actions
-    action: any;
-    title: string;
-    buttonText: string
+  property?: PropertyApiGet;
+  // biome-ignore lint/suspicious/noExplicitAny: I want this component to be reusable in case of different actions
+  action: any;
+  title: string;
+  buttonText: string;
 }
 
 const emptyProperty: PropertyApiGet = {
@@ -38,16 +38,31 @@ const emptyProperty: PropertyApiGet = {
   owner: '',
   createdAt: new Date(),
   updatedAt: new Date(),
-}
+};
 
-const PropertyAddEditForm: React.FC<PropertyFormProps> = ({ property = emptyProperty, action, title, buttonText }) => {
-  const { type, name, description, location, square_feet, beds, baths, amenities, rates, seller_info } = property
+const PropertyAddEditForm: React.FC<PropertyFormProps> = ({
+  property = emptyProperty,
+  action,
+  title,
+  buttonText,
+}) => {
+  const {
+    type,
+    name,
+    description,
+    location,
+    square_feet,
+    beds,
+    baths,
+    amenities,
+    rates,
+    seller_info,
+  } = property;
   return (
     <form action={action}>
       <h2 className='text-3xl text-center font-semibold mb-6'>{title}</h2>
 
       <div className='mb-4'>
-
         <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
           Property Type
         </label>
@@ -206,7 +221,6 @@ const PropertyAddEditForm: React.FC<PropertyFormProps> = ({ property = emptyProp
               value='Full kitchen'
               className='mr-2'
               defaultChecked={amenities?.includes('Full kitchen')}
-
             />
             <label htmlFor='amenity_kitchen'>Full kitchen</label>
           </div>

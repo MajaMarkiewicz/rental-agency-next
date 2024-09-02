@@ -1,36 +1,44 @@
 'use client';
 
-import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import Image from 'next/image'
-import logo from '@/assets/images/logo-white.png'
-import profileDefault from '@/assets/images/profile.png'
-import type { ReactElement } from 'react'
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import logo from '@/assets/images/logo-white.png';
+import profileDefault from '@/assets/images/profile.png';
+import type { ReactElement } from 'react';
 import Link from 'next/link';
-import { FaGoogle } from 'react-icons/fa'
-import { signIn, signOut, useSession, getProviders} from 'next-auth/react'
-import type {LiteralUnion, ClientSafeProvider } from 'next-auth/react'
-import UnreadMessageCount from './UnreadMessageCount'
+import { FaGoogle } from 'react-icons/fa';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import type { LiteralUnion, ClientSafeProvider } from 'next-auth/react';
+import UnreadMessageCount from './UnreadMessageCount';
 import type { BuiltInProviderType } from 'next-auth/providers/index';
-import { homePath, propertiesPath, propertiesAddPath, propertiesSavedPath } from '@/utils/paths';
+import {
+  homePath,
+  propertiesPath,
+  propertiesAddPath,
+  propertiesSavedPath,
+} from '@/utils/paths';
 
 const Navbar: React.FC = (): ReactElement => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false)
-  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false);
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null>(null);
 
-  const pathname = usePathname()
-  const { data: session } = useSession()
-  const profileImage = session?.user?.image ?? profileDefault
+  const pathname = usePathname();
+  const { data: session } = useSession();
+  const profileImage = session?.user?.image ?? profileDefault;
 
   useEffect(() => {
     const setAuthProviders = async () => {
-      const res = await getProviders()
-      setProviders(res)
-    }
+      const res = await getProviders();
+      setProviders(res);
+    };
 
-    setAuthProviders()
-  }, [])
+    setAuthProviders();
+  }, []);
 
   return (
     <nav className='bg-blue-700 border-b border-blue-500'>
@@ -101,17 +109,18 @@ const Navbar: React.FC = (): ReactElement => {
           {!session && (
             <div className='hidden md:block md:ml-6'>
               <div className='flex items-center'>
-                {providers && Object.values(providers).map((provider) => (
-                  <button 
-                    type='button'
-                    key={provider.name} 
-                    className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
-                    onClick={ () => signIn(provider.id) }
-                  >
-                    <FaGoogle className="text-white mr-2" />
-                    <span>Login or Register</span>
-                  </button>
-                ))}
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <button
+                      type='button'
+                      key={provider.name}
+                      className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                      onClick={() => signIn(provider.id)}
+                    >
+                      <FaGoogle className='text-white mr-2' />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
               </div>
             </div>
           )}
@@ -146,7 +155,7 @@ const Navbar: React.FC = (): ReactElement => {
               <div className='relative ml-3'>
                 <div>
                   <button
-                    onClick={() => setIsProfileMenuOpen((prev)=> !prev)}
+                    onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                     type='button'
                     className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
                     id='user-menu-button'
@@ -202,8 +211,8 @@ const Navbar: React.FC = (): ReactElement => {
                       tabIndex={-1}
                       id='user-menu-item-2'
                       onClick={() => {
-                        setIsProfileMenuOpen(false)
-                        signOut()
+                        setIsProfileMenuOpen(false);
+                        signOut();
                       }}
                     >
                       Sign Out
@@ -218,36 +227,38 @@ const Navbar: React.FC = (): ReactElement => {
 
       {/* <!-- Mobile menu --> */}
       {isMobileMenuOpen && (
-      <div id='mobile-menu'>
-        <div className='space-y-1 px-2 pb-3 pt-2'>
-          <Link
-            href={homePath}
-            className={`${pathname === homePath ? 'bg-black' : '' } text-white block rounded-md px-3 py-2 text-base font-medium`}
-          >
-            Home
-          </Link>
-          <Link
-            href={propertiesPath}
-            className={`${pathname === propertiesPath ? 'bg-black' : '' } text-white block rounded-md px-3 py-2 text-base font-medium`}
-          >
-            Properties
-          </Link>
-          <Link
-            href={propertiesAddPath}
-            className={`${pathname === propertiesAddPath ? 'bg-black' : '' } text-white block rounded-md px-3 py-2 text-base font-medium`}
-          >
-            Add Property
-          </Link>
-          <button type='button' className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4'>
-            <FaGoogle className='text-white mr-2' />
-            <span>Login or Register</span>
-          </button>
+        <div id='mobile-menu'>
+          <div className='space-y-1 px-2 pb-3 pt-2'>
+            <Link
+              href={homePath}
+              className={`${pathname === homePath ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+            >
+              Home
+            </Link>
+            <Link
+              href={propertiesPath}
+              className={`${pathname === propertiesPath ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+            >
+              Properties
+            </Link>
+            <Link
+              href={propertiesAddPath}
+              className={`${pathname === propertiesAddPath ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
+            >
+              Add Property
+            </Link>
+            <button
+              type='button'
+              className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4'
+            >
+              <FaGoogle className='text-white mr-2' />
+              <span>Login or Register</span>
+            </button>
+          </div>
         </div>
-      </div>
       )}
-
     </nav>
-  )
-}
+  );
+};
 
 export default Navbar;
