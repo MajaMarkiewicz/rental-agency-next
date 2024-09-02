@@ -1,3 +1,4 @@
+import { Image } from 'next/image';
 'use server'
 
 import Property from "@/models/Property"
@@ -7,7 +8,11 @@ import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 import cloudinary from '@/utils/cloudinary'
 import type { PropertyApiPost } from "@/types/property"
-import type { Types } from "mongoose"
+
+interface ImageFile {
+    name: string;
+    size: number;
+}
 
 async function addProperty(formData: FormData): Promise<void> {
     await connectDB()
@@ -17,7 +22,7 @@ async function addProperty(formData: FormData): Promise<void> {
 
     const amenities = formData.getAll('amenities') as string[]
     const images = formData.getAll('images')
-    .filter((entry): entry is File => entry instanceof File && entry.name !== '' && entry.size !== 0);
+    .filter((entry) => (entry as ImageFile).name !== '' && (entry as ImageFile).size !== 0);
 
     const propertyDataFromForm: Omit<PropertyApiPost, 'owner' | 'images'> = {
         type: formData.get('type') as string,

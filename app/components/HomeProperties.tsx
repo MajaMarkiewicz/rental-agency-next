@@ -2,7 +2,7 @@ import PropertyCard from './PropertyCard'
 import Link from 'next/link'
 import connectDB from '@/utils/connectDB'
 import Property from '@/models/Property'
-import { PropertyApiGet } from '@/types/property'
+import type { PropertyApiGet } from '@/types/property'
 
 const HomeProperties: React.FC = async () => {
     await connectDB()
