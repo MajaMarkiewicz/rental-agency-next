@@ -3,6 +3,7 @@
 import { useState } from "react"
 import type { FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
+import { propertiesPath } from "@/utils/paths"
 
 const PropertySearchForm: React.FC = () => {
     const [location, setLocation] = useState<string>('')
@@ -14,9 +15,9 @@ const PropertySearchForm: React.FC = () => {
         e.preventDefault()
 
         if(location === '' && propertyType === 'All') {
-            router.push('/properties')
+            router.push(propertiesPath)
         } else {
-            router.push(`/properties/search-results?location=${location}&propertyType=${propertyType}`)
+            router.push(`${propertiesPath}/search-results?location=${location}&propertyType=${propertyType}`)
         }
     }
 

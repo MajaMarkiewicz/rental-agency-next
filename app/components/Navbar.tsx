@@ -12,6 +12,7 @@ import { signIn, signOut, useSession, getProviders} from 'next-auth/react'
 import type {LiteralUnion, ClientSafeProvider } from 'next-auth/react'
 import UnreadMessageCount from './UnreadMessageCount'
 import type { BuiltInProviderType } from 'next-auth/providers/index';
+import { homePath, propertiesPath, propertiesAddPath, propertiesSavedPath } from '@/utils/paths';
 
 const Navbar: React.FC = (): ReactElement => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
@@ -21,10 +22,6 @@ const Navbar: React.FC = (): ReactElement => {
   const pathname = usePathname()
   const { data: session } = useSession()
   const profileImage = session?.user?.image ?? profileDefault
-
-  const propertiesPath = '/properties'
-  const propertiesAddPath = `${propertiesPath}/add`
-  const homePath = '/'
 
   useEffect(() => {
     const setAuthProviders = async () => {
@@ -189,7 +186,7 @@ const Navbar: React.FC = (): ReactElement => {
                       Your Profile
                     </Link>
                     <Link
-                      href='/properties/saved'
+                      href={propertiesSavedPath}
                       className='block px-4 py-2 text-sm text-gray-700'
                       role='menuitem'
                       tabIndex={-1}
@@ -253,6 +250,5 @@ const Navbar: React.FC = (): ReactElement => {
   )
 }
 
-// TODO @mm save paths in some const in order to not write them manually
 // TODO @mm make smaller components for readability instead one big file with comments
 export default Navbar;

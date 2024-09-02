@@ -1,11 +1,12 @@
 'use client'
 
-import { PropertyApiGet } from "@/types/property"
+import type { PropertyApiGet } from "@/types/property"
 import Link from "next/link"
 import { useState } from "react"
 import Image from "next/image"
 import deleteProperty from "../actions/deleteProperty"
 import { toast } from 'react-toastify'
+import { propertiesPath } from "@/utils/paths"
 
 const ProfileProperties: React.FC<{ properties: PropertyApiGet[] }> = ({ properties: initialProperties }) => {
     const [properties, setProperties] = useState(initialProperties)
@@ -28,7 +29,7 @@ const ProfileProperties: React.FC<{ properties: PropertyApiGet[] }> = ({ propert
 
     return properties.map(({images, name, location, _id}) => (
     <div key={_id} className="mb-10">
-        <Link href={`/properties/${_id}`}>
+        <Link href={`${propertiesPath}/${_id}`}>
           <Image
             className="h-32 w-full rounded-md object-cover"
             src={images?.[0] || ''}

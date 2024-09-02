@@ -6,6 +6,7 @@ import PropertyCard from "@/app/components/PropertyCard";
 import PropertySearchForm from "@/app/components/PropertySeachForm";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import type { PropertyApiGet } from "@/types/property";
+import { propertiesPath } from "@/utils/paths";
 
 interface SearchParams {
     location: string;
@@ -47,7 +48,7 @@ const searchResultsPage: React.FC<{searchParams: SearchParams}> = async ({ searc
             </section>
             <section className="px-4 py-6">
                 <div className="container-xl lg:container m-auto px-4 py-6">
-                    <Link href="/properties" className="flex items-center text-blue-500 hover:underline mb-3">
+                    <Link href={propertiesPath} className="flex items-center text-blue-500 hover:underline mb-3">
                         <FaArrowAltCircleLeft className="mr-2 mb-1" />
                         Back to Properties
                     </Link>

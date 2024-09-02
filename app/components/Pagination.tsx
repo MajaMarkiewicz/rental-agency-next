@@ -1,3 +1,4 @@
+import { propertiesPath } from '@/utils/paths'
 import Link from 'next/link'
 import type React from 'react'
 
@@ -13,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({ pageNumber, pageSize, total }) 
     return (
         <section className="container mx-auto flex justify-center items-center my-8">
             { pageNumber > 1 && (
-                <Link href={`/properties?page=${pageNumber-1}`} className="mr-2 px-2 py-1 border border-gray-300 rounded">
+                <Link href={`${propertiesPath}?page=${pageNumber-1}`} className="mr-2 px-2 py-1 border border-gray-300 rounded">
                     Previous
                 </Link>
             )}
@@ -23,7 +24,7 @@ const Pagination: React.FC<PaginationProps> = ({ pageNumber, pageSize, total }) 
             </span>
             
             { pageNumber < totalPages && (
-                <Link href={`/properties?page=${pageNumber+1}`} className="ml-2 px-2 py-1 border border-gray-300 rounded">
+                <Link href={`${propertiesPath}?page=${pageNumber+1}`} className="ml-2 px-2 py-1 border border-gray-300 rounded">
                     Next
                 </Link>
             )}

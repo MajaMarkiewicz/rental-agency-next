@@ -4,6 +4,7 @@ import Property from "@/models/Property"
 import type { PropertyApiPost } from "@/types/property"
 import connectDB from "@/utils/connectDB"
 import { getSessionUser } from "@/utils/getSessionUser"
+import { propertiesPath } from "@/utils/paths"
 import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 
@@ -65,7 +66,7 @@ async function updateProperty(propertyId: string, formData: FormData) {
 
     revalidatePath('/', 'layout');
 
-    redirect(`/properties/${propertyId}`);
+    redirect(`${propertiesPath}/${propertyId}`);
 }
 
 export default updateProperty;

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaBed, FaBath, FaRulerCombined, FaMoneyBill, FaMapMarker } from 'react-icons/fa'
 import type { PropertyApiGet } from '@/types/property'
+import { propertiesPath } from '@/utils/paths'
 
 const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
     const { images, type, name, beds, baths, square_feet, location, _id, rates } = property
@@ -18,7 +19,7 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
 
     return (
         <div className="rounded-xl shadow-md relative">
-            <Link href={`/properties/${_id}`}>
+            <Link href={`${propertiesPath}/${_id}`}>
                 <Image
                     src={(images && images.length > 0) ? images[0] : ''}
                     alt="Missing property image"
@@ -73,7 +74,7 @@ const PropertyCard: React.FC<{property: PropertyApiGet}> = ({property}) => {
                         <span className="text-orange-700"> {location.city} {location.state} </span>
                     </div>
                     <Link
-                    href={`/properties/${_id}`}
+                    href={`${propertiesPath}/${_id}`}
                     className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
                     >
                         Details

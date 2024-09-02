@@ -1,6 +1,7 @@
 'use client'
 
-import { PropertyApiGet } from "@/types/property"
+import type { PropertyApiGet } from "@/types/property"
+import { propertiesPath } from "@/utils/paths"
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -15,7 +16,7 @@ import {
 } from 'react-share'
 
 const ShareButtons: React.FC<{property: PropertyApiGet}> = ({ property }) => {
-    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/properties/${property._id}`
+    const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}${propertiesPath}/${property._id}`
     const shareTitle = property.name
     const hashtag = `#${property.type.replace(/\s/g, '')}ForRent`
 

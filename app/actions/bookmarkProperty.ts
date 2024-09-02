@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 import User from '@/models/User' 
 import { getSessionUser } from "@/utils/getSessionUser"
+import { propertiesSavedPath } from "@/utils/paths"
 
 async function bookmarkProperty(propertyId: string) {
     await connectDB()
@@ -17,8 +18,8 @@ async function bookmarkProperty(propertyId: string) {
 
     const isInFavorites = dbUser.favorites.includes(propertyId)
 
-    let message;
-    let isBookmarked;
+    let message: string;
+    let isBookmarked : boolean;
 
     if (isInFavorites) {
         dbUser.favorites.pull(propertyId)
@@ -31,7 +32,7 @@ async function bookmarkProperty(propertyId: string) {
     }
 
     await dbUser.save()
-    revalidatePath('/properties/saved', 'page')
+    revalidatePath(propertiesSavedPath, 'page')
 
     return { message, isBookmarked }
 

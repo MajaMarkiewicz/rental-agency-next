@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
 import cloudinary from '@/utils/cloudinary'
 import type { PropertyApiPost } from "@/types/property"
+import { propertiesPath } from '@/utils/paths'
 
 interface ImageFile {
     name: string;
@@ -77,7 +78,7 @@ async function addProperty(formData: FormData): Promise<void> {
 
     revalidatePath('/', 'layout')
 
-    redirect(`/properties/${newProperty._id}`)
+    redirect(`${propertiesPath}/${newProperty._id}`)
 }
 
 export default addProperty
