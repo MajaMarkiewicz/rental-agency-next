@@ -7,10 +7,10 @@ import type { PropertyApiGet } from '@/types/property';
 const HomeProperties: React.FC = async () => {
   await connectDB();
 
-  const recentProperties: PropertyApiGet[] = await Property.find({})
+  const recentProperties = (await Property.find({})
     .sort({ createdAt: -1 })
     .limit(3)
-    .lean();
+    .lean()) as PropertyApiGet[];
 
   return (
     <>
