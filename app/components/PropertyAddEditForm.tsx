@@ -1,9 +1,12 @@
+'use client';
+
+import type React from 'react';
+import { useState } from 'react';
 import type { PropertyApiGet } from '@/types/property';
 
 interface PropertyFormProps {
   property?: PropertyApiGet;
-  // biome-ignore lint/suspicious/noExplicitAny: I want this component to be reusable in case of different actions
-  action: any;
+  action: (formData: FormData) => Promise<void>;
   title: string;
   buttonText: string;
 }
@@ -46,6 +49,23 @@ const PropertyAddEditForm: React.FC<PropertyFormProps> = ({
   title,
   buttonText,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      await action(formData);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const {
     type,
     name,
@@ -58,8 +78,9 @@ const PropertyAddEditForm: React.FC<PropertyFormProps> = ({
     rates,
     seller_info,
   } = property;
+
   return (
-    <form action={action}>
+    <form onSubmit={handleSubmit}>
       <h2 className='text-3xl text-center font-semibold mb-6'>{title}</h2>
 
       <div className='mb-4'>
@@ -484,10 +505,13 @@ const PropertyAddEditForm: React.FC<PropertyFormProps> = ({
 
       <div>
         <button
-          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
+          className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline ${
+            isLoading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
           type='submit'
+          disabled={isLoading}
         >
-          {buttonText}
+          {isLoading ? 'Saving...' : buttonText}
         </button>
       </div>
     </form>
