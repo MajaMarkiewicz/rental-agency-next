@@ -7,6 +7,7 @@ import PropertySearchForm from '@/app/components/PropertySeachForm';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 import type { PropertyApiGet } from '@/types/property';
 import { propertiesPath } from '@/utils/paths';
+import type { FilterQuery } from 'mongoose';
 
 interface SearchParams {
   location: string;
@@ -24,7 +25,7 @@ const searchResultsPage: React.FC<{ searchParams: SearchParams }> = async ({
   await connectDB();
 
   const locationPattern = new RegExp(location, 'i');
-  const query: Query = {
+  const query: FilterQuery<PropertyApiGet> = {
     $or: [
       { 'location.street': locationPattern },
       { 'location.city': locationPattern },

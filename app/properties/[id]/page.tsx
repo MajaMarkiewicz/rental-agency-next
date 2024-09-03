@@ -22,9 +22,9 @@ interface PropertyProps {
 
 const PropertyDetail: React.FC<PropertyProps> = async ({ params }) => {
   await connectDB();
-  const propertyRaw: PropertyApiGet | null = await Property.findById(
+  const propertyRaw = (await Property.findById(
     params.id,
-  ).lean();
+  ).lean()) as PropertyApiGet | null;
 
   if (!propertyRaw) {
     return (

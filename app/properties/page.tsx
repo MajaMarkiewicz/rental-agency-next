@@ -19,10 +19,10 @@ const Properties: React.FC<{ searchParams: SearchParams }> = async ({
   const skip = (pageInt - 1) * pageSizeInt;
 
   const total = await Property.countDocuments({});
-  const properties: PropertyApiGet[] = await Property.find({})
+  const properties = (await Property.find({})
     .skip(skip)
     .limit(pageSizeInt)
-    .lean();
+    .lean()) as PropertyApiGet[];
 
   return properties.length === 0 ? (
     <section className='px-4 py-6'>

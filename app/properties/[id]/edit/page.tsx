@@ -13,9 +13,9 @@ const PropertyEdit: React.FC<{ params: PropertyParams }> = async ({
   params,
 }) => {
   await connectDB();
-  const propertyRaw: PropertyApiGet | null = await Property.findById(
+  const propertyRaw = (await Property.findById(
     params.id,
-  ).lean();
+  ).lean()) as PropertyApiGet | null;
 
   if (!propertyRaw) {
     return (
